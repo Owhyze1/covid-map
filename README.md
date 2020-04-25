@@ -1,5 +1,9 @@
-![image](https://user-images.githubusercontent.com/16492566/80269902-d9ba7480-8681-11ea-82ca-73dde8c568a4.png)
+![image](https://user-images.githubusercontent.com/16492566/80270028-c8be3300-8682-11ea-8b2e-521a006071aa.png)
 Screenshot of US Map
+
+![image](https://user-images.githubusercontent.com/16492566/80270076-1dfa4480-8683-11ea-88e4-10d12214db4e.png)
+Screenshot of World Map
+
 
 # 🍃 Gatsby Leaflet Starter
 
