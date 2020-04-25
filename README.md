@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/16492566/80269902-d9ba7480-8681-11ea-82ca-73dde8c568a4.png)
+Screenshot of US Map
+
 # 🍃 Gatsby Leaflet Starter
 
 Jumpstart your next Gatsby mapping project with Leaflet!
