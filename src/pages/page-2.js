@@ -19,13 +19,14 @@ const DEFAULT_ZOOM = 2;
 
 const SecondPage = () => {
 
+  // get API data
   async function mapEffect({ leafletElement : map } = {}) {
     if (!map) return;
 
     let response;
 
     try {
-      response = await axios.get('https://corona.lmao.ninja/states');
+      response = await axios.get('https://corona.lmao.ninja/v2/states');
     } catch (e) {
       console.log('Error obtaining states data', e);
       return;
@@ -37,14 +38,28 @@ const SecondPage = () => {
 
     if (!hasData) return;
 
+    const { dataFiltered = data.filter(
+      function( currentState ){
+        if ( currentState.state.indexOf(" ") !== -1 )
+          currentState.state.split(" ").join();
+
+        return States.hasOwnProperty(currentState.state);
+      }
+    )} = data;
+
+
+    // changed the following line from...
+    // features: data.map((stateInfo = {}) => {
     const geoJson = {
       type: 'FeatureCollection',
-      features: data.map((stateInfo = {}) => {
+      features: dataFiltered.map((stateInfo = {}) => {
+        // coronavirus stats for each state
         const { state } = stateInfo;
-        const { latitude, longitude } = States[state];
 
+        // GPS data for each state in API
+        const { lat, lng } = States[condense(state)];
 
-
+        // return stateInfo and GPS data for each point on map
         return {
           type: 'Feature',
           properties: {
@@ -52,7 +67,7 @@ const SecondPage = () => {
           },
           geometry: {
             type: 'Point',
-            coordinates: [longitude, latitude]
+            coordinates: [ lng, lat ]
           }
         }
       })
@@ -61,8 +76,10 @@ const SecondPage = () => {
     const geoJsonLayers = new L.GeoJSON(geoJson, {
       pointToLayer: (feature = {}, latlng) => {
         const { properties = {} } = feature;
-        // let updatedFormatted;
         let casesString;
+
+        let { testCoords = {} } = latlng;
+        console.log("latlng: ", testCoords);
 
         const {
           state,
@@ -70,8 +87,9 @@ const SecondPage = () => {
           todayCases,
           deaths,
           todayDeaths,
+          // active,
           // tests,
-          testsPerMillion
+          testsPerOneMillion
         } = properties
 
 
@@ -88,7 +106,7 @@ const SecondPage = () => {
                 <li><strong>Today's Cases:</strong> ${todayCases}</li>
                 <li><strong>Total Deaths:</strong> ${deaths}</li>
                 <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
-                <li><strong>Tests Per Million:</strong> ${testsPerMillion}</li>
+                <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
               </ul>
             </span>
             ${ casesString }
@@ -109,8 +127,13 @@ const SecondPage = () => {
 
 
 
-
-
+  // remove spaces in state names
+  function condense(stateName){
+    let space = ' ';
+    if ( stateName.indexOf(space) !== -1 )
+      return stateName.split(space).join();
+    return stateName;
+  }
 
 
   const mapSettings = {
@@ -120,6 +143,7 @@ const SecondPage = () => {
     mapEffect
   };
 
+  // Javascript and HTML for page
   return (
     <Layout pageName="two">
       <Helmet>
@@ -127,6 +151,8 @@ const SecondPage = () => {
       </Helmet>
       <Map {...mapSettings} />
     </Layout>
+
+
   );
 }
 

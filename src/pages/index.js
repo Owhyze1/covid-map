@@ -45,6 +45,9 @@ const IndexPage = () => {
       features: data.map((country = {}) => {
         const { countryInfo = {} } = country;
         const { lat, long: lng } = countryInfo;
+
+        // console.log("Type of lat(countries): ", typeof lat);
+
         return {
           type: 'Feature',
           properties: {
