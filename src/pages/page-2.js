@@ -38,15 +38,20 @@ const SecondPage = () => {
 
     if (!hasData) return;
 
+    // remove data points from API data without GPS coordinates
+
+    // remove RETURN keyword from line 47 to display data for all
+    // states except for those state names with more than one word
     const { dataFiltered = data.filter(
       function( currentState ){
-        if ( currentState.state.indexOf(" ") !== -1 )
-          currentState.state.split(" ").join();
+        // if ( currentState.state.indexOf(" ") !== -1 )
+        //   currentState.state = currentState.state.split(" ").join();
 
         return States.hasOwnProperty(currentState.state);
       }
     )} = data;
 
+    console.log("Filtered State Data: ", dataFiltered);
 
     // changed the following line from...
     // features: data.map((stateInfo = {}) => {
@@ -57,7 +62,7 @@ const SecondPage = () => {
         const { state } = stateInfo;
 
         // GPS data for each state in API
-        const { lat, lng } = States[condense(state)];
+        const { lat, lng } = States[state];
 
         // return stateInfo and GPS data for each point on map
         return {
@@ -79,7 +84,7 @@ const SecondPage = () => {
         let casesString;
 
         let { testCoords = {} } = latlng;
-        console.log("latlng: ", testCoords);
+//        console.log("latlng: ", testCoords);
 
         const {
           state,
