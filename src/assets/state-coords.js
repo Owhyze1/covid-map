@@ -9,7 +9,7 @@ const States = {
   California : { lat: 36.778261, lng: -119.417932},
   Colorado   : { lat: 39.550051, lng: -105.782067},
   Connecticut: { lat: 41.603221, lng: -73.087749},
-  "District of Columbia"
+  "District Of Columbia"
              : { lat: 38.905985, lng: -77.033418},
   Delaware   : { lat: 38.910832, lng: -75.52767},
   Florida    : { lat: 27.664827, lng: -81.515754},

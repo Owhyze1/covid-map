@@ -39,22 +39,22 @@ const SecondPage = () => {
     if (!hasData) return;
 
     // remove data points from API data without GPS coordinates
-
-    // remove RETURN keyword from line 47 to display data for all
-    // states except for those state names with more than one word
     const { dataFiltered = data.filter(
       function( currentState ){
-        // if ( currentState.state.indexOf(" ") !== -1 )
-        //   currentState.state = currentState.state.split(" ").join();
-
         return States.hasOwnProperty(currentState.state);
       }
     )} = data;
 
-    console.log("Filtered State Data: ", dataFiltered);
+    const { unusedData = data.filter(
+        function(currentState){
+          return !States.hasOwnProperty(currentState.state);
+      }
+    )} = data;
 
-    // changed the following line from...
-    // features: data.map((stateInfo = {}) => {
+    console.log("Filtered States Data: ", dataFiltered);
+    console.log("Unused States data: ", unusedData);
+
+
     const geoJson = {
       type: 'FeatureCollection',
       features: dataFiltered.map((stateInfo = {}) => {
@@ -83,17 +83,14 @@ const SecondPage = () => {
         const { properties = {} } = feature;
         let casesString;
 
-        let { testCoords = {} } = latlng;
-//        console.log("latlng: ", testCoords);
-
         const {
           state,
           cases,
           todayCases,
           deaths,
           todayDeaths,
-          // active,
-          // tests,
+          active,
+          tests,
           testsPerOneMillion
         } = properties
 
@@ -111,6 +108,8 @@ const SecondPage = () => {
                 <li><strong>Today's Cases:</strong> ${todayCases}</li>
                 <li><strong>Total Deaths:</strong> ${deaths}</li>
                 <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
+                <li><strong>Active:</strong>${active}</li>
+                <li><strong>Tests:</strong>${tests}</li>
                 <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
               </ul>
             </span>
