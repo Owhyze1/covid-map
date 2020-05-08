@@ -11,11 +11,11 @@ import Map from 'components/Map';
 import States from 'assets/state-coords';
 
 const LOCATION = {
-  lat: 0,
-  lng: 0
+  lat: 42,
+  lng: -100
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
-const DEFAULT_ZOOM = 2;
+const DEFAULT_ZOOM = 3.5;
 
 const SecondPage = () => {
 
@@ -132,12 +132,12 @@ const SecondPage = () => {
 
 
   // remove spaces in state names
-  function condense(stateName){
-    let space = ' ';
-    if ( stateName.indexOf(space) !== -1 )
-      return stateName.split(space).join();
-    return stateName;
-  }
+  // function condense(stateName){
+  //   let space = ' ';
+  //   if ( stateName.indexOf(space) !== -1 )
+  //     return stateName.split(space).join();
+  //   return stateName;
+  // }
 
 
   const mapSettings = {

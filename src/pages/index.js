@@ -77,8 +77,15 @@ const IndexPage = () => {
 
         casesString = `${cases}`;
 
-        if (cases > 1000){
-          casesString = `${casesString.slice(0, -3)}k+`
+        if (cases > 1000 && cases < 1000000){
+          casesString = `${casesString.slice(0, -3)}k+`;
+          // cases = addCommas(cases);
+        }
+        else if ( cases > 1000000){
+          let firstDigit = casesString.charAt(0);
+          let secondDigit = casesString.charAt(1);
+          casesString = `${firstDigit}.${secondDigit}M`;
+          // cases = addCommas(cases);
         }
 
         if ( updated ){
@@ -113,6 +120,22 @@ const IndexPage = () => {
     geoJsonLayers.addTo(map);
   }
 
+  function addCommas(number){
+    let len = number.length;
+    let start = len - 3;
+    let end = len;
+    let section = "";
+    let output = "";
+    let comma = ",";
+
+    while ( start >= 0 && len > 3 ){
+      section = number.subString(start, end);
+      output = comma + section + output;
+      end = start;
+      start -= 3;
+    }
+    return output;
+  }
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
