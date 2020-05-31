@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/16492566/83357464-7aafe580-a33a-11ea-959c-706e46915240.png)
 Screenshot of US Map
 
-![image](https://user-images.githubusercontent.com/16492566/80270076-1dfa4480-8683-11ea-88e4-10d12214db4e.png)
+![image](https://user-images.githubusercontent.com/16492566/83357531-eeea8900-a33a-11ea-9941-06b6f89d72d9.png)
 Screenshot of World Map
 
 
