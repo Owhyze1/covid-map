@@ -44,15 +44,18 @@
   color: white;
   width: 3.6em;
   height: 3.6em;
-  font-size: .7em;
+  font-size: .9em;
   font-weight: bold;
-  background-color: $red-800;
+  background-color: $red-600;
   border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(black, .9);
+  box-shadow: 0 2px 2px rgba($blue-grey-900, .9);
 
   &:hover {
     .icon-marker-tooltip {
       display: block;
+    }
+    li {
+      font-size: 1.25em;
     }
   }
 }
@@ -65,7 +68,7 @@
   width: 16em;
   font-size: 1.4em;
   padding: 1em;
-  background-color: $blue-grey-900;
+  background-color: $blue-grey-800;
   border-radius: .4em;
   margin-bottom: 1em;
   box-shadow: 0 3px 5px rgba(black, .9);
@@ -84,7 +87,7 @@
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: 2em;
     line-height: 1.2;
     margin-bottom: .1em;
     margin-top: 0;

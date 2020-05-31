@@ -28,7 +28,7 @@ const IndexPage = () => {
     let response;
 
     try {
-      response = await axios.get('https://corona.lmao.ninja/v2/countries');
+      response = await axios.get('https://corona.lmao.ninja/v2/countries?sort=country');
     } catch (e) {
       console.log('Error receiving country data', e);
       return;
@@ -120,22 +120,22 @@ const IndexPage = () => {
     geoJsonLayers.addTo(map);
   }
 
-  function addCommas(number){
-    let len = number.length;
-    let start = len - 3;
-    let end = len;
-    let section = "";
-    let output = "";
-    let comma = ",";
-
-    while ( start >= 0 && len > 3 ){
-      section = number.subString(start, end);
-      output = comma + section + output;
-      end = start;
-      start -= 3;
-    }
-    return output;
-  }
+  // function addCommas(number){
+  //   let len = number.length;
+  //   let start = len - 3;
+  //   let end = len;
+  //   let section = "";
+  //   let output = "";
+  //   let comma = ",";
+  //
+  //   while ( start >= 0 && len > 3 ){
+  //     section = number.subString(start, end);
+  //     output = comma + section + output;
+  //     end = start;
+  //     start -= 3;
+  //   }
+  //   return output;
+  // }
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',

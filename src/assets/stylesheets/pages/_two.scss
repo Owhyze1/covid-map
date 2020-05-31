@@ -1,7 +1,46 @@
-.page-two {
-  
-  h1 {
-    color: magenta;
-  }
-  
+.map-grid {
+  padding: 0px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 85% 15%;
+}
+
+Map {
+  height: 100%;
+}
+
+div.div-table {
+  height: 100%;
+}
+table.table {
+  background-color: $blue-grey-300;
+  height: 100%;
+  width: 100%;
+}
+
+thead {
+  display: block;
+  width: 100%;
+}
+
+tbody {
+  display: block;
+  width: 100%;
+}
+// thead tr {
+//   //display: block;
+//   width: 100%;
+// }
+
+th.left-header {
+  width: 80%;
+}
+th.right-header {
+  width:25%;
+  text-align: left;
+}
+
+tbody {
+  height: 95%;
+  overflow-y: auto;
 }

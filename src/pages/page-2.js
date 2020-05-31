@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import Layout from 'components/Layout';
 import Map from 'components/Map';
+import Container from 'components/Container';
 import States from 'assets/state-coords';
 
 const LOCATION = {
@@ -54,6 +55,7 @@ const SecondPage = () => {
     console.log("Filtered States Data: ", dataFiltered);
     console.log("Unused States data: ", unusedData);
 
+    buildSideMenu(dataFiltered);
 
     const geoJson = {
       type: 'FeatureCollection',
@@ -85,15 +87,14 @@ const SecondPage = () => {
 
         const {
           state,
+          active,
           cases,
           todayCases,
           deaths,
           todayDeaths,
-          active,
           tests,
           testsPerOneMillion
         } = properties
-
 
       casesString = `${cases}`;
       if ( cases > 1000 )
@@ -104,11 +105,11 @@ const SecondPage = () => {
             <span class="icon-marker-tooltip">
               <h2>${state}</h2>
               <ul>
+                <li><strong>Active Cases:</strong> ${active}</li>
                 <li><strong>Total Cases:</strong> ${cases}</li>
                 <li><strong>Today's Cases:</strong> ${todayCases}</li>
                 <li><strong>Total Deaths:</strong> ${deaths}</li>
                 <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
-                <li><strong>Active:</strong>${active}</li>
                 <li><strong>Tests:</strong>${tests}</li>
                 <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
               </ul>
@@ -130,16 +131,6 @@ const SecondPage = () => {
   }
 
 
-
-  // remove spaces in state names
-  // function condense(stateName){
-  //   let space = ' ';
-  //   if ( stateName.indexOf(space) !== -1 )
-  //     return stateName.split(space).join();
-  //   return stateName;
-  // }
-
-
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
@@ -147,16 +138,49 @@ const SecondPage = () => {
     mapEffect
   };
 
+  function buildSideMenu(array){
+      if (array === undefined ) return;
+
+      for (var i = 0; i < array.length; i++){
+
+        var stateName = array[i].state;
+        var caseNumber = array[i].cases;
+
+        if ( stateName !== undefined && caseNumber !== undefined ){
+          var tr = document.createElement("tr");
+
+          //if ( i % 2 === 0 ) tr.style.backgroundColor = "$blue-grey-100";
+
+          tr.setAttribute('class', "rows");
+          tr.insertCell(0).innerHTML = stateName;
+          tr.insertCell(1).innerHTML = caseNumber;
+
+          document.getElementById("states-list").appendChild(tr);
+        }
+    }
+  }
+
   // Javascript and HTML for page
   return (
     <Layout pageName="two">
       <Helmet>
         <title>United States</title>
       </Helmet>
-      <Map {...mapSettings} />
+      <Container className="map-grid">
+        <Map {...mapSettings} />
+        <div className="div-table">
+        <table className="table">
+          <thead>
+            <tr>
+            <th className="left-header">State</th>
+            <th className="right-header">Cases</th>
+            </tr>
+          </thead>
+            <tbody id="states-list"></tbody>
+        </table>
+        </div>
+      </Container>
     </Layout>
-
-
   );
 }
 
