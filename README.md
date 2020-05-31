@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/16492566/80270028-c8be3300-8682-11ea-8b2e-521a006071aa.png)
+![image](https://user-images.githubusercontent.com/16492566/83357464-7aafe580-a33a-11ea-959c-706e46915240.png)
 Screenshot of US Map
 
 ![image](https://user-images.githubusercontent.com/16492566/80270076-1dfa4480-8683-11ea-88e4-10d12214db4e.png)
