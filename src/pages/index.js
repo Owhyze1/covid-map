@@ -33,20 +33,25 @@ const IndexPage = () => {
       console.log('Error receiving country data', e);
       return;
     }
-    console.log('Countries', response);
+
 
     const { data = [] } = response;
     const hasData = Array.isArray(data) && data.length > 0;
 
     if ( !hasData ) return;
 
+    let formattedData = format(data);
+
+    console.log('API Countries Data: ', response);
+    console.log('Filtered Countries: ', data);
+    console.log('Formatted countries: ', formattedData);
+
+    // attach state data and GPS coordinates to each pointer
     const geoJson = {
       type: 'FeatureCollection',
-      features: data.map((country = {}) => {
+      features: formattedData.map((country = {}) => {
         const { countryInfo = {} } = country;
         const { lat, long: lng } = countryInfo;
-
-        // console.log("Type of lat(countries): ", typeof lat);
 
         return {
           type: 'Feature',
@@ -61,6 +66,7 @@ const IndexPage = () => {
       })
     }
 
+    // create pointers on Map with popup showing COVID data
     const geoJsonLayers = new L.GeoJSON(geoJson, {
       pointToLayer: (feature = {}, latlng) => {
         const { properties = {} } = feature;
@@ -70,22 +76,26 @@ const IndexPage = () => {
         const {
           country,
           updated,
+          active,
           cases,
           deaths,
-          recovered
+          recovered,
+          tests,
+          testsPerOneMillion,
+          casesPerOneMillion,
+          deathsPerOneMillion,
+          recoveredPerOneMillion
         } = properties
 
         casesString = `${cases}`;
+        let len = cases.length;
 
-        if (cases > 1000 && cases < 1000000){
-          casesString = `${casesString.slice(0, -3)}k+`;
-          // cases = addCommas(cases);
-        }
-        else if ( cases > 1000000){
+        if ( len > 3 && len < 8 )
+          casesString = `${casesString.slice(0, -4)}k+`;
+        else if ( len > 8){
           let firstDigit = casesString.charAt(0);
-          let secondDigit = casesString.charAt(1);
+          let secondDigit = casesString.charAt(2);
           casesString = `${firstDigit}.${secondDigit}M`;
-          // cases = addCommas(cases);
         }
 
         if ( updated ){
@@ -97,9 +107,15 @@ const IndexPage = () => {
             <span class="icon-marker-tooltip">
               <h2>${country}</h2>
               <ul>
+                <li><strong>Active:</strong> ${active}</li>
                 <li><strong>Confirmed:</strong> ${cases}</li>
                 <li><strong>Deaths:</strong> ${deaths}</li>
                 <li><strong>Recovered:</strong> ${recovered}</li>
+                <li><strong>Tests:</strong> ${tests}</li>
+                <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
+                <li><strong>Cases Per Million:</strong> ${casesPerOneMillion}</li>
+                <li><strong>Deaths Per Million:</strong> ${deathsPerOneMillion}</li>
+                <li><strong>Recovered Per Million:</strong> ${recoveredPerOneMillion}</li>
                 <li><strong>Last Update:</strong> ${updatedFormatted}</li>
               </ul>
             </span>
@@ -120,22 +136,7 @@ const IndexPage = () => {
     geoJsonLayers.addTo(map);
   }
 
-  // function addCommas(number){
-  //   let len = number.length;
-  //   let start = len - 3;
-  //   let end = len;
-  //   let section = "";
-  //   let output = "";
-  //   let comma = ",";
-  //
-  //   while ( start >= 0 && len > 3 ){
-  //     section = number.subString(start, end);
-  //     output = comma + section + output;
-  //     end = start;
-  //     start -= 3;
-  //   }
-  //   return output;
-  // }
+
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
@@ -143,8 +144,60 @@ const IndexPage = () => {
     mapEffect
   };
 
+  function format(array){
 
+    let temp = [];
 
+    for ( const {
+      countryInfo: coInfo,
+      country: co,
+      updated: u,
+      active: a,
+      cases: c,
+      recovered: r,
+      recoveredPerOneMillion: rpom,
+      casesPerOneMillion: cpom,
+      deaths: d,
+      deathsPerOneMillion: dpom,
+      tests: t,
+      testsPerOneMillion: tpom,
+    } of array){
+        temp.push({
+          countryInfo: coInfo,
+          country: co,
+          updated: u,
+          active: addComma(a),
+          cases: addComma(c),
+          recovered: addComma(r),
+          recoveredPerOneMillion: addComma(rpom),
+          casesPerOneMillion: addComma(cpom),
+          deaths: addComma(d),
+          deathsPerOneMillion: addComma(dpom),
+          tests: addComma(t),
+          testsPerOneMillion: addComma(tpom)
+        });
+    }
+    return temp;
+  }
+  function addComma(num){
+
+    if ( num === undefined )
+      return;
+
+    const COMMA = ',';
+    let str = num.toString();
+    let rem = str.length % 3;
+    let output = ( typeof str !== "string" ) ? str : str.slice(0,rem);
+
+    for (let i = rem; i < str.length; i += 3){
+      if ( i === rem && rem === 0 )
+        output = output.concat(str.slice(i, i+3));
+      else {
+        output = output.concat(COMMA, str.slice(i, i+3));
+      }
+    }
+    return output;
+  }
 
   return (
     <Layout pageName="home">
