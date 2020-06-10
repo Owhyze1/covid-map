@@ -81,6 +81,8 @@ const IndexPage = () => {
           deaths,
           recovered,
           tests,
+          todayCases,
+          todayDeaths,
           testsPerOneMillion,
           casesPerOneMillion,
           deathsPerOneMillion,
@@ -112,6 +114,10 @@ const IndexPage = () => {
                 <li><strong>Deaths:</strong> ${deaths}</li>
                 <li><strong>Recovered:</strong> ${recovered}</li>
                 <li><strong>Tests:</strong> ${tests}</li>
+                <li>- - -</li>
+                <li><strong>Today's Cases:</strong> ${todayCases}</li>
+                <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
+                <li>- - -</li>
                 <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
                 <li><strong>Cases Per Million:</strong> ${casesPerOneMillion}</li>
                 <li><strong>Deaths Per Million:</strong> ${deathsPerOneMillion}</li>
@@ -128,7 +134,7 @@ const IndexPage = () => {
             className: 'icon',
             html
           }),
-          riseOnHover: true
+          riseOnHover: true,
         });
       }
     });
@@ -155,11 +161,13 @@ const IndexPage = () => {
       active: a,
       cases: c,
       recovered: r,
+      deaths: d,
+      tests: t,
+      todayCases: tc,
+      todayDeaths: td,
       recoveredPerOneMillion: rpom,
       casesPerOneMillion: cpom,
-      deaths: d,
       deathsPerOneMillion: dpom,
-      tests: t,
       testsPerOneMillion: tpom,
     } of array){
         temp.push({
@@ -169,11 +177,13 @@ const IndexPage = () => {
           active: addComma(a),
           cases: addComma(c),
           recovered: addComma(r),
+          deaths: addComma(d),
+          tests: addComma(t),
+          todayCases: addComma(tc),
+          todayDeaths: addComma(td),
           recoveredPerOneMillion: addComma(rpom),
           casesPerOneMillion: addComma(cpom),
-          deaths: addComma(d),
           deathsPerOneMillion: addComma(dpom),
-          tests: addComma(t),
           testsPerOneMillion: addComma(tpom)
         });
     }

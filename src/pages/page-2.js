@@ -114,13 +114,14 @@ const SecondPage = () => {
             <span class="icon-marker-tooltip">
               <h2>${state}</h2>
               <ul>
-                <li><strong>Active Cases:</strong> ${active}</li>
-                <li><strong>Total Cases:</strong> ${cases}</li>
-                <li><strong>Total Deaths:</strong> ${deaths}</li>
+                <li><strong>Active:</strong> ${active}</li>
+                <li><strong>Confirmed:</strong> ${cases}</li>
+                <li><strong>Deaths:</strong> ${deaths}</li>
+                <li><strong>Tests:</strong>${tests}</li>
+                <li>- - -</li>
                 <li><strong>Today's Cases:</strong> ${todayCases}</li>
                 <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
-                <li></li>
-                <li><strong>Tests:</strong>${tests}</li>
+                <li>- - -</li>
                 <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
                 <li><strong>Cases Per Million:</strong> ${casesPerOneMillion}</li>
                 <li><strong>Deaths Per Million:</strong> ${deathsPerOneMillion}</li>
@@ -215,9 +216,9 @@ const SecondPage = () => {
         if ( stateName !== undefined && caseNumber !== undefined ){
           var tr = document.createElement("tr");
 
-          tr.setAttribute('class', "left");
+          tr.setAttribute('class', "row");
           tr.insertCell(0).innerHTML = stateName;
-          tr.setAttribute('class', "right");
+          // tr.setAttribute('class', "right");
           tr.insertCell(1).innerHTML = caseNumber;
 
           document.getElementById("states-list").appendChild(tr);
@@ -237,11 +238,11 @@ const SecondPage = () => {
         <table className="table">
           <thead>
             <tr>
-            <th className="left-header">State</th>
-            <th className="right-header">Cases</th>
+              <th className="left-header">State</th>
+              <th className="right-header">Cases</th>
             </tr>
           </thead>
-            <tbody id="states-list"></tbody>
+          <tbody id="states-list"></tbody>
         </table>
         </div>
       </Container>
