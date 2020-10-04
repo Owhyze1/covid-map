@@ -28,28 +28,28 @@ const IndexPage = () => {
     let response;
 
     try {
-      response = await axios.get('https://corona.lmao.ninja/v2/countries?sort=country');
-    } catch (e) {
-      console.log('Error receiving country data', e);
+      response = await axios.get( 'https://corona.lmao.ninja/v2/countries?sort=country' );
+    } catch ( e ) {
+      console.log( 'Error receiving country data', e );
       return;
     }
 
 
     const { data = [] } = response;
-    const hasData = Array.isArray(data) && data.length > 0;
+    const hasData = Array.isArray( data ) && data.length > 0;
 
     if ( !hasData ) return;
 
-    let formattedData = format(data);
+    let formattedData = format( data );
 
-    console.log('API Countries Data: ', response);
-    console.log('Filtered Countries: ', data);
-    console.log('Formatted countries: ', formattedData);
+    console.log( 'API Countries Data: ', response );
+    console.log( 'Filtered Countries: ', data );
+    console.log( 'Formatted countries: ', formattedData );
 
     // attach state data and GPS coordinates to each pointer
     const geoJson = {
       type: 'FeatureCollection',
-      features: formattedData.map((country = {}) => {
+      features: formattedData.map(( country = {}) => {
         const { countryInfo = {} } = country;
         const { lat, long: lng } = countryInfo;
 
@@ -62,13 +62,13 @@ const IndexPage = () => {
             type: 'Point',
             coordinates: [ lng, lat ]
           }
-        }
+        };
       })
-    }
+    };
 
     // create pointers on Map with popup showing COVID data
-    const geoJsonLayers = new L.GeoJSON(geoJson, {
-      pointToLayer: (feature = {}, latlng) => {
+    const geoJsonLayers = new L.GeoJSON( geoJson, {
+      pointToLayer: ( feature = {}, latlng ) => {
         const { properties = {} } = feature;
         let updatedFormatted;
         let casesString;
@@ -87,21 +87,21 @@ const IndexPage = () => {
           casesPerOneMillion,
           deathsPerOneMillion,
           recoveredPerOneMillion
-        } = properties
+        } = properties;
 
         casesString = `${cases}`;
         let len = cases.length;
 
         if ( len > 3 && len < 8 )
-          casesString = `${casesString.slice(0, -4)}k+`;
-        else if ( len > 8){
-          let firstDigit = casesString.charAt(0);
-          let secondDigit = casesString.charAt(2);
+          casesString = `${casesString.slice( 0, -4 )}k+`;
+        else if ( len > 8 ){
+          let firstDigit = casesString.charAt( 0 );
+          let secondDigit = casesString.charAt( 2 );
           casesString = `${firstDigit}.${secondDigit}M`;
         }
 
         if ( updated ){
-          updatedFormatted = new Date(updated).toLocaleString();
+          updatedFormatted = new Date( updated ).toLocaleString();
         }
 
         const html =
@@ -109,13 +109,13 @@ const IndexPage = () => {
             <span class="icon-marker-tooltip">
               <h2>${country}</h2>
               <ul>
-                <li><strong>Active:</strong> ${active}</li>
+                <li style="color:yellow"><strong>Active:</strong> ${active}</li>
                 <li><strong>Confirmed:</strong> ${cases}</li>
                 <li><strong>Deaths:</strong> ${deaths}</li>
                 <li><strong>Recovered:</strong> ${recovered}</li>
                 <li><strong>Tests:</strong> ${tests}</li>
                 <li>- - -</li>
-                <li><strong>Today's Cases:</strong> ${todayCases}</li>
+                <li style="color:yellow"><strong>Today's Cases:</strong> ${todayCases}</li>
                 <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
                 <li>- - -</li>
                 <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
@@ -139,7 +139,7 @@ const IndexPage = () => {
       }
     });
 
-    geoJsonLayers.addTo(map);
+    geoJsonLayers.addTo( map );
   }
 
 
@@ -150,7 +150,7 @@ const IndexPage = () => {
     mapEffect
   };
 
-  function format(array){
+  function format( array ){
 
     let temp = [];
 
@@ -169,27 +169,27 @@ const IndexPage = () => {
       casesPerOneMillion: cpom,
       deathsPerOneMillion: dpom,
       testsPerOneMillion: tpom,
-    } of array){
-        temp.push({
-          countryInfo: coInfo,
-          country: co,
-          updated: u,
-          active: addComma(a),
-          cases: addComma(c),
-          recovered: addComma(r),
-          deaths: addComma(d),
-          tests: addComma(t),
-          todayCases: addComma(tc),
-          todayDeaths: addComma(td),
-          recoveredPerOneMillion: addComma(rpom),
-          casesPerOneMillion: addComma(cpom),
-          deathsPerOneMillion: addComma(dpom),
-          testsPerOneMillion: addComma(tpom)
-        });
+    } of array ){
+      temp.push({
+        countryInfo: coInfo,
+        country: co,
+        updated: u,
+        active: addComma( a ),
+        cases: addComma( c ),
+        recovered: addComma( r ),
+        deaths: addComma( d ),
+        tests: addComma( t ),
+        todayCases: addComma( tc ),
+        todayDeaths: addComma( td ),
+        recoveredPerOneMillion: addComma( rpom ),
+        casesPerOneMillion: addComma( cpom ),
+        deathsPerOneMillion: addComma( dpom ),
+        testsPerOneMillion: addComma( tpom )
+      });
     }
     return temp;
   }
-  function addComma(num){
+  function addComma( num ){
 
     if ( num === undefined )
       return;
@@ -197,13 +197,13 @@ const IndexPage = () => {
     const COMMA = ',';
     let str = num.toString();
     let rem = str.length % 3;
-    let output = ( typeof str !== "string" ) ? str : str.slice(0,rem);
+    let output = ( typeof str !== 'string' ) ? str : str.slice( 0,rem );
 
-    for (let i = rem; i < str.length; i += 3){
+    for ( let i = rem; i < str.length; i += 3 ){
       if ( i === rem && rem === 0 )
-        output = output.concat(str.slice(i, i+3));
+        output = output.concat( str.slice( i, i+3 ));
       else {
-        output = output.concat(COMMA, str.slice(i, i+3));
+        output = output.concat( COMMA, str.slice( i, i+3 ));
       }
     }
     return output;

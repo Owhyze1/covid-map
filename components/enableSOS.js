@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Col } from "react-native-easy-grid";
-import { Text, Stylesheet } from "native-base";
+import React, { Component } from 'react';
+import { Col } from 'react-native-easy-grid';
+import { Text, Stylesheet } from 'native-base';
 
 // SEMITA
 //
@@ -9,26 +9,26 @@ import { Text, Stylesheet } from "native-base";
 
 class EnableSOS extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor( props ) {
+    super( props );
+  }
 
-    render() {
+  render() {
 
-        return (
-            <Col size={2}
-                 style={{
-                     backgroundColor: 'green',
-                     justifyContent: 'center',
-                     alignItems: 'center'
-                 }}>
-                <Text style={{
-                    fontWeight: 'bold',
-                    color: 'white'
-                }}>ENABLED</Text>
-            </Col>
-        );
-    }
+    return (
+      <Col size={2}
+        style={{
+          backgroundColor: 'green',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        <Text style={{
+          fontWeight: 'bold',
+          color: 'white'
+        }}>ENABLED</Text>
+      </Col>
+    );
+  }
 
 }
 
