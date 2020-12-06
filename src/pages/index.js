@@ -98,17 +98,9 @@ const IndexPage = () => {
         if ( len > 3 && len < 8 )
           casesString = `${casesString.slice( 0, -4 )}k+`;
         else if ( len > 8 && len < 12 )
-          casesString = `${casesString.slice(0, -8)}M`;
+          casesString = `${casesString.slice(0, -8)}.${casesString.slice(-7, -6)}M`;
 
 
-        // if ( len > 3 && len < 8 )
-        //   casesString = `${casesString.slice( 0, -4 )}k+`;
-        // else if ( len > 8 ){
-        // //  casesString = `${casesString.slice(0, -8)}M`;
-        //   let firstDigit = casesString.charAt( 0 );
-        //   let secondDigit = casesString.charAt( 2 );
-        //   casesString = `${firstDigit}.${secondDigit}M`;
-        // }
 
         if ( updated ){
           updatedFormatted = new Date( updated ).toLocaleString();
@@ -227,6 +219,11 @@ const IndexPage = () => {
 
     if ( num === undefined )
       return;
+
+    // account for decimals
+    if ( !Number.isInteger(num) ){
+
+    }
 
     const COMMA = ',';
     let str = num.toString();
