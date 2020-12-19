@@ -13,6 +13,7 @@
     "gatsby-plugin-sass": "^2.2.1",
     "gatsby-source-filesystem": "^2.2.2",
     "ini": "^2.0.0",
+    "install-peerdeps": "^2.0.3",
     "leaflet": "^1.6.0",
     "node-sass": "^4.13.1",
     "path": "^0.12.7",
