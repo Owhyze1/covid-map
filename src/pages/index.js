@@ -222,7 +222,7 @@ const IndexPage = () => {
 
     // account for decimals
     if ( !Number.isInteger(num) ){
-
+        num = parseInt(num);
     }
 
     const COMMA = ',';
