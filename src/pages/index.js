@@ -129,30 +129,6 @@ const IndexPage = () => {
             </span>
             ${ casesString }
           </span>`;
-        // const html =
-        // `<span class="icon-marker">
-        //     <span class="icon-marker-tooltip">
-        //       <h2>${country}</h2>
-        //       <ul>
-        //         <li style="color:yellow"><strong>Active:</strong> ${active}</li>
-        //         <li><strong>Confirmed:</strong> ${cases}</li>
-        //         <li><strong>Deaths:</strong> ${deaths}</li>
-        //         <li><strong>Recovered:</strong> ${recovered}</li>
-        //         <li><strong>Tests:</strong> ${tests}</li>
-        //         <li>- - -</li>
-        //         <li style="color:yellow"><strong>Today's Cases:</strong> ${todayCases}</li>
-        //         <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
-        //         <li>- - -</li>
-        //         <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
-        //         <li><strong>Cases Per Million:</strong> ${casesPerOneMillion}</li>
-        //         <li><strong>Deaths Per Million:</strong> ${deathsPerOneMillion}</li>
-        //         <li><strong>Recovered Per Million:</strong> ${recoveredPerOneMillion}</li>
-        //         <li><strong>Last Update:</strong> ${updatedFormatted}</li>
-        //       </ul>
-        //     </span>
-        //     ${ casesString }
-        //   </span>`;
-
 
         return L.marker( latlng, {
           icon: L.divIcon({
@@ -175,45 +151,7 @@ const IndexPage = () => {
     mapEffect
   };
 
-  // function format( array ){
-  //
-  //   let temp = [];
-  //
-  //   for ( const {
-  //     countryInfo: coInfo,
-  //     country: co,
-  //     updated: u,
-  //     active: a,
-  //     cases: c,
-  //     recovered: r,
-  //     deaths: d,
-  //     tests: t,
-  //     todayCases: tc,
-  //     todayDeaths: td,
-  //     recoveredPerOneMillion: rpom,
-  //     casesPerOneMillion: cpom,
-  //     deathsPerOneMillion: dpom,
-  //     testsPerOneMillion: tpom,
-  //   } of array ){
-  //     temp.push({
-  //       countryInfo: coInfo,
-  //       country: co,
-  //       updated: u,
-  //       active: addComma( a ),
-  //       cases: addComma( c ),
-  //       recovered: addComma( r ),
-  //       deaths: addComma( d ),
-  //       tests: addComma( t ),
-  //       todayCases: addComma( tc ),
-  //       todayDeaths: addComma( td ),
-  //       recoveredPerOneMillion: addComma( rpom ),
-  //       casesPerOneMillion: addComma( cpom ),
-  //       deathsPerOneMillion: addComma( dpom ),
-  //       testsPerOneMillion: addComma( tpom )
-  //     });
-  //   }
-  //   return temp;
-  // }
+
 
   function addComma( num ){
 
