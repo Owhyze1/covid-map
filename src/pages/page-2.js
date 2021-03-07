@@ -11,14 +11,14 @@ import Map from 'components/Map';
 import Container from 'components/Container';
 import States from 'assets/state-coords';
 
+import { addComma } from 'assets/format';
+
 const LOCATION = {
   lat: 42,
   lng: -100
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 3.5;
-
-// var dataFiltered;
 
 
 const SecondPage = () => {
@@ -49,20 +49,18 @@ const SecondPage = () => {
       }
     );
 
-    let formattedData = format( dataFiltered );
+    // console.log( 'All US API Data', response );
+    // console.log( 'Filtered: ', dataFiltered );
 
-    console.log( 'All US API Data', response );
-    console.log( 'Filtered: ', dataFiltered );
-    console.log( 'Formatted: ', formattedData );
-
-    buildSideMenu( formattedData );
+    buildSideMenu( dataFiltered );
 
     const geoJson = {
       type: 'FeatureCollection',
-      features: formattedData.map(( stateInfo = {}) => {
+      // features: formattedData.map(( stateInfo = {}) => {
+      features: dataFiltered.map(( stateInfo = {}) => {
+
         // coronavirus stats for each state
         const { state } = stateInfo;
-
         // GPS data for each state in API
         const { lat, lng } = States[state];
 
@@ -100,11 +98,13 @@ const SecondPage = () => {
           deathsPerOneMillion
         } = properties;
 
-        casesString = `${cases}`;
-        let len = cases.length;
+        casesString = `${addComma(cases)}`;
+        let len = casesString.length;
 
-        if ( len > 3 )
+        if ( len > 3 & len < 8 )
           casesString = `${casesString.slice( 0, -4 )}k+`;
+        else if ( len > 8 && len < 12 )
+          casesString = `${casesString.slice(0,-8)}.${casesString.slice(-7,-6)}M`;
 
         if ( updated )
           updatedFormatted = new Date( updated ).toLocaleString();
@@ -114,17 +114,17 @@ const SecondPage = () => {
             <span class="icon-marker-tooltip">
               <h2>${state}</h2>
               <ul>
-                <li style="color:yellow"><strong>Active:</strong> ${active}</li>
-                <li><strong>Confirmed:</strong> ${cases}</li>
-                <li><strong>Deaths:</strong> ${deaths}</li>
-                <li><strong>Tests:</strong>${tests}</li>
+                <li style="color:yellow"><strong>Active:</strong> ${addComma(active)}</li>
+                <li><strong>Confirmed:</strong> ${addComma(cases)}</li>
+                <li><strong>Deaths:</strong> ${addComma(deaths)}</li>
+                <li><strong>Tests:</strong>${addComma(tests)}</li>
                 <li>- - -</li>
-                <li style="color:yellow"><strong>Today's Cases:</strong> ${todayCases}</li>
-                <li><strong>Today's Deaths:</strong> ${todayDeaths}</li>
+                <li style="color:yellow"><strong>Today's Cases:</strong> ${addComma(todayCases)}</li>
+                <li><strong>Today's Deaths:</strong> ${addComma(todayDeaths)}</li>
                 <li>- - -</li>
-                <li><strong>Tests Per Million:</strong> ${testsPerOneMillion}</li>
-                <li><strong>Cases Per Million:</strong> ${casesPerOneMillion}</li>
-                <li><strong>Deaths Per Million:</strong> ${deathsPerOneMillion}</li>
+                <li><strong>Tests Per Million:</strong> ${addComma(testsPerOneMillion)}</li>
+                <li><strong>Cases Per Million:</strong> ${addComma(casesPerOneMillion)}</li>
+                <li><strong>Deaths Per Million:</strong> ${addComma(deathsPerOneMillion)}</li>
 
                 <li><strong>Last Updated:</strong> ${updatedFormatted}</li>
               </ul>
@@ -153,58 +153,6 @@ const SecondPage = () => {
     mapEffect
   };
 
-  function format( array ){
-
-    let temp = [];
-
-    for ( const {
-      state: s,
-      updated: u,
-      active: a,
-      cases: c,
-      casesPerOneMillion: cpom,
-      deaths: d,
-      deathsPerOneMillion: dpom,
-      tests: t,
-      testsPerOneMillion: tpom,
-      todayCases: tc,
-      todayDeaths: td,
-    } of array ){
-      temp.push({
-        state: s,
-        updated: u,
-        active: addComma( a ),
-        cases: addComma( c ),
-        casesPerOneMillion: addComma( cpom ),
-        deaths: addComma( d ),
-        deathsPerOneMillion: addComma( dpom ),
-        tests: addComma( t ),
-        testsPerOneMillion: addComma( tpom ),
-        todayCases: addComma( tc ),
-        todayDeaths: addComma( td ),
-      });
-    }
-    return temp;
-  }
-  function addComma( num ){
-
-    if ( num === undefined )
-      return;
-
-    const COMMA = ',';
-    let str = num.toString();
-    let rem = str.length % 3;
-    let output = ( typeof str !== 'string' ) ? str : str.slice( 0,rem );
-
-    for ( let i = rem; i < str.length; i += 3 ){
-      if ( i === rem && rem === 0 )
-        output = output.concat( str.slice( i, i+3 ));
-      else {
-        output = output.concat( COMMA, str.slice( i, i+3 ));
-      }
-    }
-    return output;
-  }
   function buildSideMenu( array ){
     if ( array === undefined ) return;
 
