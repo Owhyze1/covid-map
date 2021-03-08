@@ -166,8 +166,7 @@ const SecondPage = () => {
 
         tr.setAttribute( 'class', 'row' );
         tr.insertCell( 0 ).innerHTML = stateName;
-        // tr.setAttribute('class', "right");
-        tr.insertCell( 1 ).innerHTML = caseNumber;
+        tr.insertCell( 1 ).innerHTML = addComma(caseNumber);
 
         document.getElementById( 'states-list' ).appendChild( tr );
       }

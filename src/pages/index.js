@@ -42,17 +42,12 @@ const IndexPage = () => {
 
     if ( !hasData ) return;
 
-    // convert numbers to strings to add comma
-    // let formattedData = format( data );
-
     // console.log( 'API Countries Data: ', response );
     // console.log( 'Filtered Countries: ', data );
-    // console.log( 'Formatted countries: ', formattedData );
 
     // attach state data and GPS coordinates to each pointer
     const geoJson = {
       type: 'FeatureCollection',
-//      features: formattedData.map(( country = {}) => {
       features: data.map(( country = {}) => {
         const { countryInfo = {} } = country;
         const { lat, long: lng } = countryInfo;
