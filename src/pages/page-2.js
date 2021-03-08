@@ -150,6 +150,9 @@ const SecondPage = () => {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
     zoom: DEFAULT_ZOOM,
+    minZoom: DEFAULT_ZOOM,
+    touchZoom: true,
+    bounceAtZoomLimits: true,
     mapEffect
   };
 

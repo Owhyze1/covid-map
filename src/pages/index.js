@@ -14,6 +14,7 @@ const LOCATION = {
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
+// const MINIMUM_ZOOM = 1.5;
 
 const IndexPage = () => {
 
@@ -145,6 +146,9 @@ const IndexPage = () => {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
     zoom: DEFAULT_ZOOM,
+    // minZoom: MINIMUM_ZOOM,
+    touchZoom: true,
+    bounceAtZoomLimits: true,
     mapEffect
   };
 
