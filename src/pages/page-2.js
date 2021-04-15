@@ -19,6 +19,7 @@ const LOCATION = {
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 3.5;
+const MINIMUM_ZOOM = DEFAULT_ZOOM;
 
 
 const SecondPage = () => {
@@ -150,7 +151,7 @@ const SecondPage = () => {
     center: CENTER,
     defaultBaseMap: 'OpenStreetMap',
     zoom: DEFAULT_ZOOM,
-    minZoom: DEFAULT_ZOOM,
+    minZoom: MINIMUM_ZOOM,
     touchZoom: true,
     bounceAtZoomLimits: true,
     mapEffect
@@ -162,7 +163,7 @@ const SecondPage = () => {
     for ( var i = 0; i < array.length; i++ ){
 
       var stateName = array[i].state;
-      var caseNumber = array[i].cases;//comma(array[i].cases.toString());
+      var caseNumber = array[i].cases;
 
       if ( stateName !== undefined && caseNumber !== undefined ){
         var tr = document.createElement( 'tr' );
