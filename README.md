@@ -1,3 +1,5 @@
+## Deployed website: https://owhyze1.github.io/covid-map/
+
 ![image](https://user-images.githubusercontent.com/16492566/83357464-7aafe580-a33a-11ea-959c-706e46915240.png)
 Screenshot of US Map
 
